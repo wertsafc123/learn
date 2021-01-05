@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+	<script>
+		var data = {
+			name: 1,
+			children: [{
+				name: 2,
+				children: [
+					{name:4,children: [{name: 7}]},
+				]
+			}, {
+				name: 3,
+				children: [
+					{name:5},
+					{name:6,children: [{name: 8,children: [{name: 9}]}]},
+				]
+			}]
+		}
+		console.log('------深度优先遍历的递归写法-------')
+		const deepLoopNodes = []
+		function deepLoop(obj){
+			deepLoopNodes.push(obj.name)
+			obj.children && obj.children.forEach(item => {
+				deepLoop(item)
+			})
+		}
+		deepLoop(data)
+		console.log(deepLoopNodes);
+
+		console.log('------深度优先遍历的执行队列写法-------')
+		function deepStack(obj){
+			const nodes = []
+			const stack = []
+			stack.push(obj)
+			while (stack.length > 0) {
+				const item = stack.pop()
+				nodes.push(item.name)
+				item.children && item.children.reverse().forEach(i => {
+					stack.push(i)
+				})
+			}
+			console.log(nodes)
+		}
+		deepStack(data)
+
+		console.log('------广度优先遍历的执行队列写法-------')
+		function wideStack(obj){
+			const nodes = []
+			const stack = []
+			stack.push(obj)			
+			while (stack.length > 0) {
+				const item = stack.shift()
+				nodes.push(item.name)
+				item.children && item.children.reverse().forEach(i => {
+					stack.push(i)
+				})
+			}
+			console.log(nodes)
+		}
+		wideStack(data)
+
+		console.log('------广度优先遍历的递归写法-------')
+		let wideLoop=[];
+		wideLoop.push(data.name);
+		function wideTraversal(obj){
+			obj.children && obj.children.forEach(item => {
+				wideLoop.push(item.name);
+			})
+			obj.children && obj.children.forEach(item => {
+				wideTraversal(item)
+			})
+		}
+		wideTraversal(data)
+		console.log(wideLoop)
+	</script>
+</body>
+</html>
