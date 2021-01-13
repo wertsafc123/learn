@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        .banner {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .shape {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.75;
+        }
+        .inset {
+            width: 200px;
+            height: 200px;
+            left: 300px;
+            top: 300px;
+            background-image: linear-gradient(to bottom right, #183de7, #48cffe 80%);
+            -webkit-clip-path: inset(0 0 0 0 round 10px);
+            clip-path: inset(0 0 0 0 round 10px);
+        }
+        .circle {
+            width: 200px;
+            height: 200px;
+            left: 100px;
+            background-image: linear-gradient(to bottom right, #18e767, #48fef5 80%);
+            -webkit-clip-path: circle(50% at 50% 50%);
+            clip-path: circle(50% at 50% 50%);
+        }
+        .ellipse {
+            width: 200px;
+            height: 200px;
+            left: 600px;
+            top: 100px;
+            background-image: linear-gradient(to bottom right, #e77c18, #fef248 80%);
+            -webkit-clip-path: ellipse(45% 30% at 50% 50%);
+            clip-path: ellipse(45% 30% at 50% 50%);
+        }
+        .polygon {
+            width: 200px;
+            height: 200px;
+            right: 100px;
+            top: 100px;
+            -webkit-clip-path: polygon(0 0, 50% 100%, 100% 0);
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            background-image: linear-gradient(to right, #f76b71, #a41058 60%);
+        }
+        .ani1 {
+            -webkit-animation: spin2 202s linear infinite;
+            animation: spin2 202s linear infinite;
+        }
+        .ani2 {
+            -webkit-animation: move 30s linear infinite;
+            animation: move 30s linear infinite;
+        }
+        .polygon2 {
+            width:800px;
+            height:400px;
+            position: absolute;
+            background-image: linear-gradient(to bottom right, #2618e7, #48c4fe 80%);
+            animation: move-0 10s linear infinite;
+        }
+        .text1 {
+            top: 100px;
+            left: 500px;
+            color: #fff;
+            -webkit-background-clip: text;
+            font-family: 'BlocExtCond';
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            font-size: 40px;
+            background-image: linear-gradient(to bottom right, #2618e7, #48c4fe 80%);
+            transform: skew(-18deg) rotate(-18deg) translateY(0) scaleY(1.04);
+        }
+        @keyframes move-0 {
+          0%{
+          clip-path: polygon(35.00% 29.75%,21.00% 71.75%,63.38% 36.25%,35.13% 30.00%)
+         }
+          50%{
+          clip-path: polygon(82.88% 21.25%,65.25% 70.00%,86.88% 63.25%,83.00% 21.00%)
+         }
+          100%{
+          clip-path: polygon(35.00% 29.75%,21.00% 71.75%,63.38% 36.25%,35.13% 30.00%)
+         }
+       }
+        @keyframes move {
+            0% {
+                transform: scale(1);
+                transform-origin: 100% 100%;
+            }
+            50% {
+                transform: scale(.8);
+                transform-origin: 0% 30%;
+            }
+            100% {
+                transform: scale(1);
+                transform-origin: 100% 50%;
+            }
+        }
+        @keyframes spin2 {
+            100% {
+                transform: rotate(-360deg);
+                transform-origin: 50% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="shape inset ani1">
+            <!-- inset() : 定义一个矩形 。注意，定义矩形不是rect，而是 inset。
+                语法
+                inset( <length-percentage>{1,4} [ round <border-radius> ]? )
+                说明
+                inset()可以传入5个参数，分别对应top,right,bottom,left的裁剪位置,round radius（可选，圆角） -->
+        </div>
+        
+        <div class="shape circle ani2">
+            <!-- circle() : 定义一个圆 。
+            语法
+            circle( [ <shape-radius> ]? [ at <position> ]? )
+            说明
+            circle()可以传人2个可选参数；
+            1. 圆的半径，默认元素宽高中短的那个为直径，支持百分比
+            2. 圆心位置，默认为元素中心点
+            半径公式
+            如果半径使用百分比：圆的半径 = (sqrt(width^2+height^2)/sqrt(2)) * 百分比  -->
+        </div>
+        
+        <div class="shape ellipse ani1">
+            <!-- ellipse() : 定义一个椭圆 。
+            语法
+            ellipse( [ <shape-radius>{2} ]? [ at <position> ]? )
+            说明
+            ellipse()可以传人3个可选参数；
+            1. 椭圆的X轴半径，默认是宽度的一半，支持百分比
+            2. 椭圆的Y轴半径，默认是高度的一半，支持百分比
+            3. 椭圆中心位置，默认是元素的中心点
+            示例
+            clip-path: ellipse(45% 30% at 50% 50%); -->
+        </div>
+
+        <div class="shape polygon ani1">
+            <!-- polygon() : 定义一个多边形 。
+            语法
+            polygon( <fill-rule>? , [ <length-percentage> <length-percentage> ]# )
+            说明
+            <fill-rule>可选，表示填充规则用来确定该多边形的内部。可能的值有nonzero和evenodd,默认值是nonzero
+            后面的每对参数表示多边形的顶点坐标（X,Y），也就是连接点
+            示例
+            clip-path: polygon(50% 0,100% 50%,0 100%); -->
+        </div>
+
+        <div class="shape polygon2">
+            <!-- clip-path动画
+            只要两个 clip-path，其中包含的点个数相同，在animation的帧内部就可以线性切换了！ 
+            这里可以想象，利用clip-path能够轻易实现各式各样的样式交互
+            -->
+        </div>
+
+        <div class="shape text1">
+            MYCAP
+            <!-- backgroup-clip -->
+        </div>
+    </div>
+    <a href="https://www.html.cn/tool/css-clip-path/">clip-path生成器</a>
+    <br>
+    <a href="https://codepen.io/ainalem/pen/ExYNYGp">clip-path动画优秀作品</a>
+    <br>
+    <a href="http://species-in-pieces.com/#">clip-path动画大神作品</a>
+    <br>
+    clip-path 直译过来就是裁剪路径，使用SVG或形状定义一个HTML元素的可见区域的方法。想象一下你在Photoshop中勾勒路径的场景。MDN上是这样介绍 clip-path的：
+    <br>
+    clip-path属性可以防止部分元素通过定义的剪切区域来显示，仅通过显示的特殊区域。剪切区域是被URL定义的路径代替行内或者外部svg，或者定义路线的方法例如circle().。clip-path属性代替了现在已经弃用的剪切 clip属性。
+</body>
+</html>

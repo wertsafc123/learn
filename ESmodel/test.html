@@ -20,6 +20,9 @@
         }, 2000)
         console.log(x1, y1)
 
+        // 当webpack在打包这些module时，会在外层编译出一个立刻自执行函数
+        // 用函数作用域模拟这些一个个包
+        // 最后生成一个bundle
     </script>
 </body>
 </html>
