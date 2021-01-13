@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+	<script type="module">
+        // esm有3种导入方式
+        import {x, y} from './data.js' // 导入的是name
+        import * as obj1 from './data.js' // 导入的是name
+        import obj from './data.js' // 导入的是default
+
+        const {x: x1, y: y1} = obj
+        console.log(x, y)
+        setTimeout(() => {
+            console.log(y) // name export是live bind
+            // 如果在cjs中const data = require('./data')
+            // 直接打印这个data，会发现这个x，y的value其实是一个叫getter的函数
+        }, 2000)
+        console.log(x1, y1)
+
+    </script>
+</body>
+</html>
