@@ -1,12 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <style>
+        svg {
+            width: 300px;
+            display: block;
+            position: absolute;
+        }
+
+        .path {
+            stroke-dasharray: 320;
+            stroke-dashoffset: 0;
+            animation: dash 1s linear;
+        }
+
+        @keyframes dash {
+            from {
+                stroke-dashoffset: 320;
+            }
+
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .ball {
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            offset-path: path('M10 80 Q 77.5 10, 145 80 T 280 80');
+            offset-distance: 0%;
+            animation: red-ball 2s linear alternate infinite;
+        }
+
+        @keyframes red-ball {
+            from {
+                offset-distance: 0%;
+            }
+
+            to {
+                offset-distance: 100%;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    我认为:
-    1、使用工具制作出svg
-    <a href="https://www.w3cplus.com/svg/svg-animation-guide.html">阅读</a>
+    <div style="height: 300px"><svg width="300px" height="175px" version="1.1">
+            <path fill="transparent" stroke="#000000" stroke-width="4" d="M10 80 Q 77.5 10, 145 80 T 280 80"
+                class="path"></path>
+        </svg>
+        <div class="ball"></div>
+    </div>
+    <div>
+        <h4>路径动画</h4>
+        <p>设置stroke-dasharray:400</p>
+        <p>渐变stroke-dashoffset:320</p>
+        <br>
+        <a href="https://www.w3cplus.com/svg/svg-animation-guide.html">原理阅读</a>
+        <br>
+        <a href="http://www.bootstrapmb.com/item/9399/preview">优秀作品</a>
+        <a href="http://www.bootstrapmb.com/item/8737/preview">优秀作品</a>
+        <a href="http://www.bootstrapmb.com/item/8463/preview">优秀作品</a>
+        <h4>跟随路径</h4>
+        <p>写svg-path<a href="http://justcode.ikeepstudying.com/2015/07/svg%E7%9F%A2%E9%87%8F%E7%BB%98%E5%9B%BE-path%E8%B7%AF%E5%BE%84%E8%AF%A6%E8%A7%A3%EF%BC%88%E5%9F%BA%E6%9C%AC%E7%94%BB%E6%B3%95%EF%BC%89/">path写法</a></p>
+        <p>offset-path导入path</p>
+        <p>渐变offset-distance:0%</p><a href="https://www.w3cplus.com/svg/svg-animation-guide.html">阅读</a>
+    </div>
 </body>
+
 </html>
