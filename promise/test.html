@@ -1,0 +1,108 @@
+<html>
+<script>
+	class Promise {
+		state = 'pending';
+		value = null;
+		reason = null;
+		callbacks = [];
+		constructor(fn) {
+			fn(this._resolve.bind(this), this._reject.bind(this))
+		}
+		_resolve(value) {
+			if (this.state === 'pending') {
+				this.value = value
+				this.state = 'fulfilled'
+				this.callbacks.forEach(fn => this._handle(fn))
+
+			}
+		}
+		_reject(reason) {
+			if (this.state === 'pending') {
+				this.reason = reason
+				this.state = 'rejected'
+				this.callbacks.forEach(fn => this._handle(fn))
+			}
+		}
+		_handle({onfulfilled, onrejected, resolve, reject}) {
+			if (this.state === 'pending') {
+				this.callbacks.push({
+					onfulfilled,
+					onrejected,
+					resolve,
+					reject
+				});
+				return;
+			}
+
+			let cb = this.state === 'fulfilled' ? onfulfilled : onrejected
+			let sender = this.state === 'fulfilled' ? resolve : reject
+
+			if(!cb) {
+				sender(this.value)
+				return;
+			}
+
+			let ret;
+
+			try {
+				ret = cb(this.value)
+			} catch(err) {
+				ret = err;
+				sender = reject;
+			} finally {
+				sender(ret)
+			}
+		}
+		then(onfulfilled, onrejected) {
+			return new Promise((resolve, reject) => {
+				this._handle({
+					onfulfilled,
+					onrejected,
+					resolve,
+					reject
+				})
+			})
+		}
+		catch(onrejected) {
+			return this.then(null, onrejected)
+		}
+		finally(fn) {
+			return this.then(fn, fn)
+		}
+		static resolve(value) {
+			if (value && value instanceof Promise) {
+				return value;
+			} else if (value && typeof value === 'object' && typeof value.then === 'function') {
+				let then = value.then;
+				return new Promise(resolve => {
+					then(resolve);
+				});
+
+			} else if (value) {
+				return new Promise(resolve => resolve(value));
+			} else {
+				return new Promise(resolve => resolve());
+			}
+		}
+
+		static all(promises) {
+			return new Promise((resolve, reject) => {
+				let fulfilledCount = 0
+				const itemNum = promises.length
+				const rets = Array.from({ length: itemNum })
+				promises.forEach((promise, index) => {
+					Promise.resolve(promise).then(result => {
+						fulfilledCount++;
+						rets[index] = result;
+						if (fulfilledCount === itemNum) {
+							resolve(rets);
+						}
+					}, reason => reject(reason));
+				})
+
+			})
+		}
+	}
+</script>
+
+</html>
